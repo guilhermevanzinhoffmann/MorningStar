@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Fabricante>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Fabricantes</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nome</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var fabrica in Model)
+        {
+            <tr>
+                <th scope="row">@fabrica.Id</th>
+                <td>@fabrica.Nome</td>
+            </tr>    
+        }
+    </tbody>
+</table>

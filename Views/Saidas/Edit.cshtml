@@ -1,0 +1,48 @@
+﻿@model MorningStar.Models.Saida
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Saida</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="DataHoraSaida" class="control-label"></label>
+                <input asp-for="DataHoraSaida" class="form-control" />
+                <span asp-validation-for="DataHoraSaida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Local" class="control-label"></label>
+                <input asp-for="Local" class="form-control" />
+                <span asp-validation-for="Local" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantidade" class="control-label"></label>
+                <input asp-for="Quantidade" class="form-control" />
+                <span asp-validation-for="Quantidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MercadoriaID" class="control-label"></label>
+                <select asp-for="MercadoriaID" class="form-control" asp-items="ViewBag.MercadoriaID"></select>
+                <span asp-validation-for="MercadoriaID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MorningStar.Models.Saida>
+
+@{
+    ViewData["Title"] = "Saidas";
+}
+
+<h1>Saidas</h1>
+
+<div id="opcoes">
+    <p>
+        <span id="criar"><a class="btn btn-primary" asp-action="Create">Nova Saida</a></span>
+        <span id="detalhes"><a class="btn btn-primary" asp-action="MoreDetails">Detalhes</a></span>
+        <span id="relatorio"><a class="btn btn-primary" href="Saidas/Relatorio">Relatório</a></span>
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DataHoraSaida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Local)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mercadoria)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataHoraSaida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Local)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mercadoria.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

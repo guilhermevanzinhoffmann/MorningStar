@@ -1,0 +1,59 @@
+﻿@model IEnumerable<MorningStar.Models.Mercadoria>
+
+@{
+    ViewData["Title"] = "Mercadorias";
+}
+
+<h1>Mercadorias</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Adicionar nova mercadoria</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fabricante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fabricante.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

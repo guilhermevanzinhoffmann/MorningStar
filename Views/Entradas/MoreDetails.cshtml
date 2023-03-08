@@ -1,0 +1,156 @@
+﻿@model MorningStar.Models.ViewModels.ViewDetalhe
+@{
+    ViewData["Title"] = "Detalhe de Entradas";
+}
+
+<h1>Detalhe de Entradas</h1>
+
+<div id="escolhas">
+    <span id="escolha-mercadorias">
+        <label id="label-mercadorias">Selecione a mercadoria:</label>
+        @Html.DropDownList("Mercadorias", "Selecione")
+    </span>
+    <span id="escolha-meses">
+        <label id="label-meses">Selecione o mês:</label>
+        @Html.DropDownList("Meses", "Selecione")
+    </span>
+    <span id="detalhar"><button id="Detalhes" class="btn btn-primary" onclick="carregarGrafico()">Detalhar</button></span>
+</div>
+
+<div class="row mt-0" style="padding-top:10px;">
+    <div class="col-sm-10">
+        <div class="card">
+            <div class="card-header" style="text-align:center">Total de Entradas - Dia</div>
+            <div class="card-body">
+                <canvas id="graficoEntradas" style="max-height:350px"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-0" style="padding-top:10px;">
+    <div class="col-sm-10">
+        <div class="card">
+            <div class="card-header" style="text-align:center">Total de Entradas - Mês</div>
+            <div class="card-body">
+                <canvas id="graficoEntradasMes" style="max-height:350px"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        let mercadoriaId = 0;
+        let mes = '';
+        const mesesSimp = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+        const meses = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        const mesesBase = [
+                "JANEIRO",
+                "FEVEREIRO",
+                "MARÇO",
+                "ABRIL",
+                "MAIO",
+                "JUNHO",
+                "JULHO",
+                "AGOSTO",
+                "SETEMBRO",
+                "OUTUBRO",
+                "NOVEMBRO",
+                "DEZEMBRO"];
+        $(function () {
+            $("#Mercadorias").change(function () {
+                mercadoriaId = $("#Mercadorias").val();
+            });
+            $("#Meses").change(function () {
+                mes = mesesBase.indexOf($("#Meses").val().toString()) + 1;
+            });
+        });
+
+        function carregarGrafico() {
+            entradasMes();
+            fetch("GetGrafico?mercadoriaID="+mercadoriaId.toString()+"&mes="+mes)
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response);
+                })
+                .then((dataJson) => {
+                    let numeroDias = []
+                    let quantidades = []
+                    for (i = 1; i <= meses[mes-1]; i++){
+                        numeroDias.push(i);
+                        quantidades.push(0);
+                    }
+                    dataJson.map((item) => { quantidades[item.dia - 1] = item.quantidade });
+                    const data = {
+                        labels: numeroDias,
+                        datasets: [{
+                            label: 'Quantidade',
+                            data: quantidades,
+                            backgroundColor: 'rgb(54, 162, 235)',
+                            borderWidth: 1
+                        }]
+                    };
+
+                    const config = {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                        },
+
+                    };
+
+                    const canvasBars = document.getElementById("graficoEntradas");
+
+                    const graficoBarras = new Chart(canvasBars, config)
+                })
+        }
+        
+        function entradasMes(){
+            let quantidades = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            fetch("GetGraficoMes?mercadoriaID=" + mercadoriaId.toString())
+            .then((response) => {
+                return response.ok? response.json() : Promise.reject(response);
+            })
+            .then((dataJson) => {
+                dataJson.map((item) => { quantidades[item.mes -1] = item.quantidade });
+                const data = {
+                    labels: mesesSimp,
+                    datasets:[{
+                        label: 'Quantidade',
+                        data: quantidades,
+                        backgroundColor: 'rgb(54, 162, 235)',
+                        borderWidth: 1
+                    }]
+                };
+
+                const config = {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        },
+                    },
+
+                };
+
+                const canvasBars = document.getElementById("graficoEntradasMes");
+
+                const graficoBarras = new Chart(canvasBars, config)
+            })
+        }
+
+    </script>
+}
+

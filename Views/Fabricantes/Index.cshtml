@@ -1,0 +1,33 @@
+﻿@model IEnumerable<MorningStar.Models.Fabricante>
+
+@{
+    ViewData["Title"] = "Fabricantes";
+}
+
+<h1>Fabricantes</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Adicionar Fabricante</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

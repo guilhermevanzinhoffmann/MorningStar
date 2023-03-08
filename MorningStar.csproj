@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\Fabricante\**" />
+    <Content Remove="Views\Fabricante\**" />
+    <EmbeddedResource Remove="Views\Fabricante\**" />
+    <None Remove="Views\Fabricante\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\FabricanteController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Fabricantes\Edit.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Chart.Mvc" Version="1.0.0.2" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.12" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+    <PackageReference Include="PagedList.MVC" Version="4.5.0" />
+    <PackageReference Include="Rotativa" Version="1.7.3" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\Rotativa\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Rotativa\wkhtmltoimage.exe" />
+    <None Include="wwwroot\Rotativa\wkhtmltopdf.exe" />
+  </ItemGroup>
+
+</Project>
